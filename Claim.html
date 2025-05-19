@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Claim Free Kit - ProteinMC</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0a0f1f;
+      color: #00cfff;
+      font-family: 'Arial', sans-serif;
+    }
+    nav {
+      background-color: #0a162d;
+      text-align: center;
+      padding: 1rem;
+      border-bottom: 2px solid #00cfff;
+    }
+    nav a {
+      color: #00cfff;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #ffffff; }
+
+    #claim {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 60%;
+      border: 2px solid #00cfff;
+      background-color: #0a162d;
+      color: #00cfff;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 0.5rem 1.5rem;
+      background-color: #00cfff;
+      color: #0a0f1f;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background-color: #009fcf;
+    }
+    .success {
+      color: #80ff80;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <a href="Proteinmc.html">Home</a>
+  <a href="Claim.html">Claim Free Kit</a>
+  <a href="Events.html">Events</a>
+</nav>
+
+<!-- Claim Kit Section -->
+<section id="claim">
+  <h2>🎁 Claim Your Free Kit</h2>
+  <form id="claimForm">
+    <input type="text" id="username" placeholder="Enter your Minecraft name" required><br>
+    <button type="submit">Claim Free Kit</button>
+	<p><h3>this section is not working right now so if you want free kit you can ask owner in game for kit</h3></p>
+  </form>
+  <div id="response" class="success"></div>
+</section>
+
+<script>
+document.getElementById('claimForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  if (username.length < 3) {
+    document.getElementById('response').textContent = 'Please enter a valid username.';
+    return;
+  }
+  const res = await fetch('/claim-kit', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ username })
+  });
+  const msg = await res.text();
+  document.getElementById('response').textContent = msg;
+});
+</script>
+
+</body>
+</html>
